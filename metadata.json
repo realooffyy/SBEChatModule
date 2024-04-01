@@ -1,0 +1,9 @@
+{
+    "$schema": "../CTAutocomplete/schema.json",
+    "name": "SBEChat",
+    "creator": "ooffyy",
+    "description": "Adds a '/chat sbe' command",
+    "version": "1.0.0",
+    "entry": "index.js",
+    "requires": ["PogData"]
+  }
