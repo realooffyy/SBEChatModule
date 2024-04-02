@@ -16,7 +16,13 @@ const chats = {
 }
 
 const ALREADY_MESSAGE = "&cYou're already in this channel!&r"
+const hypixelRegex = /([^.\s]+)?.?hypixel.net.?/i // if i ever want to make 
+// https://regex101.com/r/9nBFFO/1
+// old regex (just in case): /.*.?hypixel.net.?/i
 const chatRegex = /\/chat (.+)\b/
+
+const SBE = '&cSB&fE&r'
+const CHAT = '&cChat&r'
 
 register("messageSent", (m, e) => {
     if (!data.hypixel) return
@@ -32,7 +38,7 @@ register("messageSent", (m, e) => {
             cancel(e)
 
             if (!data.sbeChat) {
-                ChatLib.chat('§aYou are now in the §r§6SBE§r§a channel§r')
+                ChatLib.chat(`&aYou are now in the ${SBE}&a channel&r`)
                 data.sbeChat = true
                 data.save()
             }
@@ -57,7 +63,6 @@ register("messageSent", (m, e) => {
                         return
                     }
                 })
-            
             }
         }
     }
@@ -68,29 +73,40 @@ register("chat", (chat) => {
     data.chat = chat.toLocaleUpperCase()
     data.save()
 }).setCriteria('&aYou are now in the &r&6${chat}&r&a channel&r')
-// https://regex101.com/r/3djezK/1
 
 register("chat", (e) => {
+    if (!data.hypixel) return
     cancel(e)
 }).setCriteria(ALREADY_MESSAGE)
 
-function hypixelTest() {
-    data.hypixel = /.*.?hypixel.net.?/i.test(Server.getIP())
+function hypixelInit() { 
+    const ip = Server.getIP()
+    if (hypixelRegex.test(ip)) {
+        const match = ip.match(hypixelRegex)[1]?.toLocaleLowerCase()
+        if (match === 'alpha') data.hypixel = false
+        else data.hypixel = true
+    }
+    else data.hypixel = false
     data.save()
     //ChatLib.chat(`${Server.getIP()}: ${data.hypixel}`)
 }
-register("serverConnect", hypixelTest)
-register("worldLoad", hypixelTest)
+register("serverConnect", hypixelInit)
+register("serverDisconnect", () => { data.hypixel = false; data.save() })
+register("worldLoad", hypixelInit)
 
-let firstInstall = register("step", () => {
-
+let firstInstall = register("tick", (t) => {
+    if (t%100!=0) return
     if (data.firstInstall) {
         if (data.hypixel) {
+            ChatLib.say("/chat a")
             data.chat = 'ALL'
             data.save()
-            ChatLib.say("/chat a")
             ChatLib.chat('&aYou are now in the &r&6ALL&r&a channel&r')
-            ChatLib.chat("&aInitialised &cSB&7E&cChat&r!\nThis module is made for &7SB&cE &rusers using the &6/sbechat &rfeature.\nUse &6/chat sbe &rto toggle the chat on.")
+
+            ChatLib.chat(`&c&m${ChatLib.getChatBreak(" ")}`)
+            ChatLib.chat(`&aInitialised ${SBE}${CHAT}!\nThis module is made for ${SBE} &rusers using the &6/sbechat &rfeature.\n&cPlease note that this module currently only works on the main Hypixel server!\nUse &6/chat sbe &rto switch to the ${SBE} chat channel.`)
+            ChatLib.chat(`&c&m${ChatLib.getChatBreak(" ")}`)
+            
             data.firstInstall = false
             data.save()
         } else {
@@ -98,5 +114,4 @@ let firstInstall = register("step", () => {
         }
     }
     else firstInstall.unregister()
-}).setDelay(5)
-
+})
