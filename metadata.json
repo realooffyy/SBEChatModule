@@ -3,7 +3,7 @@
     "name": "SBEChat",
     "creator": "ooffyy",
     "description": "Adds a '/chat sbe' command. Only works on Hypixel.",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "entry": "index.js",
     "requires": ["PogData"]
   }
