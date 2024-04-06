@@ -74,6 +74,13 @@ register("chat", (chat) => {
     data.save()
 }).setCriteria('&aYou are now in the &r&6${chat}&r&a channel&r')
 
+register("chat", () => {
+    if (!data.hypixel) return
+    data.chat = 'DM'
+    data.sbeChat = false
+    data.save()
+}).setCriteria(/Opened a chat conversation with .* for the next 5 minutes. Use \/chat a to leave/)
+
 register("chat", (e) => {
     if (!data.hypixel) return
     cancel(e)
