@@ -1,3 +1,12 @@
+const msg = new TextComponent(`&c[!] &rSBE have now implemented /chat sbe, so I've disabled this module. &aClick me to delete the SBEChat module.`)
+.setClick('run_command', '/ct delete SBEChat')
+
+register("step", () => {
+    ChatLib.chat(msg)
+}).setDelay(10)
+
+/*
+
 import PogObject from "../PogData/index"
 
 const data = new PogObject("SBEChat", {
@@ -122,3 +131,5 @@ let firstInstall = register("tick", (t) => {
     }
     else firstInstall.unregister()
 })
+
+*/
