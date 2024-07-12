@@ -2,8 +2,8 @@
     "$schema": "../CTAutocomplete/schema.json",
     "name": "SBEChat",
     "creator": "ooffyy",
-    "description": "Adds a '/chat sbe' command. Only works on Hypixel.",
-    "version": "1.0.3",
+    "description": "Features to improve SBE Chat",
+    "version": "1.1.0",
     "entry": "index.js",
     "requires": []
   }
