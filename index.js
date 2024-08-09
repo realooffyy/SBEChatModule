@@ -25,8 +25,8 @@ const chats = {
 }
 
 const ALREADY_MESSAGE = "&cYou're already in this channel!&r"
-const hypixelRegex = /([^.\s]+)?.?hypixel.net.?/i // if i ever want to make 
-// https://regex101.com/r/9nBFFO/1
+const hypixelRegex = /([^.\s]+)?.?hypixel.net\.?/i // if i ever want to make 
+// https://regex101.com/r/9nBFFO/2
 // old regex (just in case): /.*.?hypixel.net.?/i
 const chatRegex = /\/chat (.+)\b/
 
